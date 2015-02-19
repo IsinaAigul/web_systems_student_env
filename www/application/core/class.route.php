@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Dmitriy
- * Date: 12.11.2014
- * Time: 11:16
- */
 
 /**
  *  Example routing
@@ -23,25 +17,26 @@
 
 // ----------- Router.php
 
+
 class Router {
 
   private static $routes = array();
 
-  private __constructor() {}
-
-  public static function get($pattern, $callback) {
-    self::set('GET', $pattern, $callback);
+  private function __constructor() {}
+  
+  public static function get($params) {
+    self::set('GET', $params);
   }
 
   public static function post($pattern, $callback) {
     self::set('POST', $pattern, $callback);
   }
 
-  private static function set($type, $pattern, $callback) {
-    if (!function_exists($callback)) { 
-      new Exception("Method $callback not exists"); 
-    }
-    self::$routes[$type][$pattern] = $callback;
+  private static function set($type, $params) {
+     foreach ($params as $pattern => $value) 
+     {
+       self::$routes[$type][$pattern] = $value;
+     }
   }
 
 
@@ -55,21 +50,34 @@ class Router {
     $active_routes = self::$routes[$method];
 
     // Для всех роутов 
-    foreach ($active_routes as $pattern => $callback) {     
-	// Если REQUEST_URI соответствует шаблону - вызываем функцию
+    foreach ($active_routes as $pattern => $callback) {
+      $pattern = str_replace("/", "\/", $pattern );
+	   // Если REQUEST_URI соответствует шаблону - вызываем функцию
      if (preg_match_all("/$pattern/", $uri, $matches) !== false) {
-	//извлекаем класс контролерра из callback
-	$del = explode('/', $pattern);
-	$cont =$del[0];
-	$met = $del[1];
-	$met();//вызов метода
+	     //извлекаем класс контролерра из callback
+	     $callback = explode('/', $callback);
+	     $cont =$callback[0];
+	     $met = $callback[1];
+	     $method_name = "$met";
+       $call = new $cont();
+       $call->$method_name();
+       
+       $foo = new foo();
+       call_user_func_array(array($foo, "bar"), array("three", "four"));       
+       // class foo {
+       //   public function bar($arg1, $arg2) {
+       //       ................
+       //     }
+       //}
+       }
+	     #$met();//вызов метода
         // выходим из цикла
         break;
       }
       $matches = array();
     }
   }
-}
+
 
     /**
      * @param $pattern

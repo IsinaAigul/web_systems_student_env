@@ -1,29 +1,8 @@
 <?php
 // ------ index.php-------------------------
-#Подгрузка файла с модулями
-define('DEBUG','0');
-define('DATE_FORMAT','Y-m-d');
-include_once 'autoinclude.php';
-$loader = Loader::getInstance();
-$loader->load_all_modules();
-
-//TemplateManager::setActive(theme() == 'cardinal' ? new CardinalTheme() : new InkTheme());
-TemplateManager::setActive(new CardinalTheme());
-//$view = new viewCardinalPage("PAGE CONTENT");
-//$view->show();
-
-$r = Router::getInstance();
-$content = Router::process($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
-/*GetView(name_view);*/
-$page_class = TemplateManager::GetView('Page');
-$page = new $page_class($content);
-echo $page->render();
-test();
-function test(){
-    $f1 = new PasswordRegField("Введите пароль","password", true);
-		<meta charset="utf-8">
-	
-    //$f2 = new TextField("Логин","bla-bla",true);
-    echo $f1->render();
-    //echo $f2->render();
-}
+include_once './application/core/class.route.php';
+include_once './application/modules/Supplier/controller/controller.supplier.php';
+Router::get(array('/tour_Create' => 'Supplier/tour_Create',//создание тура
+                  '/tour_Redaction'=>'Supplier/ChangeTour' ));//редактировать тур
+#Router::post(array('/supplier_home_page'=>'Supplier/showTour'));
+Router::process ('GET', '/tour_Create');
