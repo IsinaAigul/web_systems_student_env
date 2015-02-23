@@ -14,8 +14,8 @@ Class Supplier{
     private function loginTest(){//проверка на залогинивание персонажа
         foreach($_COOKIE as $value){
             if(!is_null($value)){//если в куках есть идентификатор сессии
-                return true;//вернуть true
-            }
+                return true;//вернуть tr
+                }
         }
         return false;//иначе false
     }
@@ -32,7 +32,19 @@ Class Supplier{
 
     }
 
-	public function tour_Create($value){//изменение тура
+	public function newTour($value){//изменение тура
         print "My Tours";
     }
+    
+    public function viewSupplier($value) {
+    //   var_dump($value);
+      print "View Tour id ";  
+    }
+    
+    public function changeTour ($value)
+    {
+        
+    }
+    
+    
 }

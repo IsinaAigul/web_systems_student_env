@@ -28,8 +28,8 @@ class Router {
     self::set('GET', $params);
   }
 
-  public static function post($pattern, $callback) {
-    self::set('POST', $pattern, $callback);
+  public static function post($params) {
+    self::set('POST', $params);
   }
 
   private static function set($type, $params) {
@@ -49,55 +49,32 @@ class Router {
     // Используем роуты $routes['GET'] или $routes['POST']  в зависимости от метода HTTP.
     $active_routes = self::$routes[$method];
 
-    // Для всех роутов 
     foreach ($active_routes as $pattern => $callback) {
       $pattern = str_replace("/", "\/", $pattern );
-	   // Если REQUEST_URI соответствует шаблону - вызываем функцию
-     if (preg_match_all("/$pattern/", $uri, $matches) !== false) {
-	     //извлекаем класс контролерра из callback
-	     $callback = explode('/', $callback);
-	     $cont =$callback[0];
-	     $met = $callback[1];
-	     $method_name = "$met";
-       $call = new $cont();
-       $call->$method_name();
-       
-       $foo = new foo();
-       call_user_func_array(array($foo, "bar"), array("three", "four"));       
-       // class foo {
-       //   public function bar($arg1, $arg2) {
-       //       ................
-       //     }
-       //}
-       }
-	     #$met();//вызов метода
-        // выходим из цикла
-        break;
-      }
-      $matches = array();
-    }
-  }
-
-
-    /**
-     * @param $pattern
-     * @param $pattern_params
-     * @param $matches
-     * @return mixed
-     */
-    private function constructPattern($pattern, $pattern_params)
-    {
-        $pattern = str_replace('/', '\/', $pattern);
-        //документация!!!!
-
-        preg_match_all("/(?<=:)[a-zA-Z0-9]++/", $pattern, $matches);
-        foreach ($matches[0] as $value) {
-            if(array_key_exists($value, $pattern_params)) {
-                $arg_rex_exp = $pattern_params[$value];
-                $pattern = str_replace(":$value", "($arg_rex_exp)", $pattern);
+	    // Если REQUEST_URI соответствует шаблону - вызываем функцию
+      if (preg_match_all("/$pattern/", $uri, $matches) >= 1) 
+      {
+        $arg = array();
+        //извлекаем класс контролерра из callback
+        foreach($matches as $key => $val)
+        {
+            if ($key >= 1)
+            {
+                array_push ($arg, $val[0]);
             }
         }
-        $pattern = "^$pattern";//ВЕРНУТЬ ЗНАК $ ПОСЛЕ PULLREQUEST!!!!(возможно)
-        return $pattern;
+	      $callback = explode('/', $callback);
+	      $cont =$callback[0];
+	      $met = $callback[1];
+        $call = new $cont();
+        call_user_func_array(array($call, $met), $arg); 
+        break;
+      }
+	    #$met();//вызов метода
+     
+      
     }
+    $matches = array();
+  }
 }
+
