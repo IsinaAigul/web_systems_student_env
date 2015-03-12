@@ -8,6 +8,10 @@ $loader = Loader::getInstance();
 
 $loader->load_all_modules();
 
+ThemeManager::setTheme(new ThemeKube());
+
+
+
 Router::get(array('/tour_Create' => 'Supplier/tour_Create',//создание тура
                   '/tour_Redaction'=>'Supplier/ChangeTour', 
                   '/viewTour/(\d+)'=>'Supplier/viewTour'));//редактировать тур
@@ -17,5 +21,10 @@ Router::post(array('/supplier_home_page'=>'Supplier/showTour'));
 $form = new AuthorizationForm();
 echo $form->process();
 
+
+function test(){
+    $t1 = new TextField("ТЕСТ!ТЕСТ!ТЕСТ!","test",true);
+    echo $t1->render();
+}
 //$field = new SelectField();
 //echo $field -> render();

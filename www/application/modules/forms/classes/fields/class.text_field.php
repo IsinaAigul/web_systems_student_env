@@ -10,11 +10,8 @@ Class TextField extends Field{//текстовое поле для ФИО
         return null;
     }
     public function render(){//вернуть строковое представление текстового поля
-      $label = $this->label();
-      $name = $this->name();
-      $value = $this ->value();
-      $required = $this->required();
-        $view = "<br>$label<br><input value='$value' name='$name' required='$required'>";
-        return $view;
+        $view = ThemeManager::getView("TextField");
+        $drawer = new $view($this);
+        return $drawer->render();
     }
 }

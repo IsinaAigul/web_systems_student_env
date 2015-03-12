@@ -25,11 +25,9 @@ Class Loader
     {
         $this->includeFunc(glob("application/core/*.php"));
         $this->includeFunc(glob("application/modules/*/*/*.php"));
-        
+        $this->includeFunc(glob("application/themes/*/*.php"));
         $this->includeFunc(glob("application/modules/*/*/*/*.php"));
-        
         $this->includeFunc(glob("application/modules/*/routes_collection.php"));
-         
         $this->includeFunc(glob("application/modules/forms/classes/fields/*.php"));
         $this->includeFunc(glob("application/modules/forms/classes/forms/*.php"));
        

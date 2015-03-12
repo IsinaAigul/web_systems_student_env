@@ -57,15 +57,10 @@ abstract class Form{
         
         $view = "<br>$label<br><input method='$method' action='$action' field='$field'>";//добавить шаблон поля пароля авторизации
         return $view;*/
-        
-         $label = $this->label();
-         $method = $this->method();
-         $action = $this->action();
-         $form = "<h1>$label</h1><form method='$method' action='$action'>";
-         foreach ($this->fields as $field) {
-           $form .= $field->render();
-        }
-            return $form."</form>";
+
+        $view = ThemeManager::getView("Form");
+        $drawer = new $view($this);
+        return $drawer->render();
     }
     
 
@@ -77,7 +72,7 @@ abstract class Form{
     
     public function process(){//действие при нажатии на submit
         $this->getDataFromForm();//считать данные с формы
-        if($this->fields["test"]->value() != md5(get_called_class())){
+        if($_POST["test"] != md5(get_called_class())){
             return $this->renderForm();
             
         }
