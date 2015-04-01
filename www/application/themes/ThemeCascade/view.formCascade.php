@@ -9,17 +9,29 @@ Class FormThemeCascade extends AbstractView
         $this->form = $form;
     }
 
+    private  function getFields()
+    {
+        $fields = "";
+        foreach($this->form->getFormFields() as $field)
+        {
+            $fields .= $field->render();
+        }
+
+        return $fields;
+    }
+
+
     public function render()
     {
-        $label = $this->form->label();
-        $method = $this->form->method();
-        $action = $this->form->action();
-        $form = "<h1>$label</h1><form method='$method' action='$action'>";
-        foreach ($this->form->getFormFields() as $field) {
-            $form .= $field->render();
-        }
-        return $form . "</form>";
+        $dwoo = new Dwoo_Core();
+
+        // Create some data
+        $data = array('addition'=>$action = $this->form->action(), 'division'=> $name = $this->form->method(), 'header' => $header = $this->form->label(), "fields" => $fields = $this->getFields());
+
+        // Output the result ...
+        return $dwoo->get('application/themes/ThemeCascade/form.tpl', $data);
     }
+
 }
 /**
  * Created by PhpStorm.

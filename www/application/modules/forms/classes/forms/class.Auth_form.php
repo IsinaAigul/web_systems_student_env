@@ -2,7 +2,7 @@
 Class AuthorizationForm extends Form{
     protected function createForm(){//построение формы
         $this->method("POST");//инициализация атрибутов формы
-        $this->action("/login");
+        $this->action("");
         $this->label("Авторизация");
         $index_login = "login";//инициализировать поля формы
         $this->fields[$index_login] = new LoginField("Ваш логин",$index_login,true);//инициализация класса поля логина

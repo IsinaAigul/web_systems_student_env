@@ -1,0 +1,1 @@
+<input type ="submit" value="{$addition}"  name="{$division}" />

@@ -24,6 +24,7 @@ Class Loader
     public function load_all_modules()
     {
         $this->includeFunc(glob("application/core/*.php"));
+        $this->includeFunc(glob("application/core/lib/dwooAutoload.php"));
         $this->includeFunc(glob("application/modules/*/*/*.php"));
         $this->includeFunc(glob("application/themes/*/*.php"));
         $this->includeFunc(glob("application/modules/*/*/*/*.php"));

@@ -8,10 +8,13 @@ Class PasswordFieldThemeKube extends AbstractView{
     }
 
     public function render(){
-        $label = $this->field->label();
-        $name = $this->field->name();
-        $value = $this ->field->value();
-        return "<br><font color='lime'>$label</font><br><input  type ='password' value='$value' name='$name'>";
+        $dwoo = new Dwoo_Core();
+
+        // Create some data
+        $data = array('addition'=>$label = $this->field->label(), 'division'=> $name = $this->field->name());
+
+        // Output the result ...
+        return $dwoo->get('application/themes/ThemeKube/password.tpl', $data);
     }
 
 }

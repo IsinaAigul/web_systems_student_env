@@ -1,0 +1,1 @@
+{$addition}<input type ="password" name="{$division}" />

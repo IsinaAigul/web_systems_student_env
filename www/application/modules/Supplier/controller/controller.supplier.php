@@ -43,6 +43,7 @@ Class Supplier{
     
     public function changeTour ($value)
     {
+
         
     }
     

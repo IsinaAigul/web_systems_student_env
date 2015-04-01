@@ -1,6 +1,7 @@
 <?php
 
-Class TextFieldThemeCascade extends AbstractView{
+Class TextFieldThemeCascade extends AbstractView
+{
 
     private $field = null;
 
@@ -9,10 +10,13 @@ Class TextFieldThemeCascade extends AbstractView{
     }
 
     public function render(){
-        $label = $this->field->label();
-        $name = $this->field->name();
-        $value = $this ->field->value();
-        return "<br><font color='navy'>$label</font><br><input type='text' value='$value' name='$name'>";
+        $dwoo = new Dwoo_Core();
+
+        // Create some data
+        $data = array('addition'=>$label = $this->field->label(), 'division'=> $name = $this->field->name(), 'mult' => $value = $this->field->value());
+
+        // Output the result ...
+        return $dwoo->get('application/themes/ThemeCascade/text.tpl', $data);
     }
 
 }
